@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Chrono Chris - Temps en direct</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+        h1 { color: #333; }
+        table { border-collapse: collapse; width: 50%; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #eee; }
+    </style>
+</head>
+<body>
+    <h1>Temps du chrono</h1>
+    <table id="chronoTable">
+        <thead>
+            <tr>
+                <th>Transpondeur</th>
+                <th>Temps</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        async function loadTimes() {
+            try {
+                const response = await fetch('r1.json');
+                const data = await response.json();
+
+                const tbody = document.querySelector('#chronoTable tbody');
+                tbody.innerHTML = ''; // Vider le tableau
+
+                // Exemple : on parcourt chaque enregistrement dans r1.json
+                for (const key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        const row = document.createElement('tr');
+                        const transpoCell = document.createElement('td');
+                        transpoCell.textContent = key;
+                        const timeCell = document.createElement('td');
+                        timeCell.textContent = data[key];
+                        row.appendChild(transpoCell);
+                        row.appendChild(timeCell);
+                        tbody.appendChild(row);
+                    }
+                }
+            } catch (err) {
+                console.error('Erreur en chargeant r1.json:', err);
+            }
+        }
+
+        // Actualiser toutes les 5 secondes
+        loadTimes();
+        setInterval(loadTimes, 5000);
+    </script>
+</body>
+</html>
