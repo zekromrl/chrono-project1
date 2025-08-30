@@ -15,9 +15,9 @@ async function downloadR1() {
     client.ftp.verbose = false;
     try {
         await client.access({
-            host: "ftp.lws.fr",   // mettre le FTP de ton frère
-            user: "USERNAME",     // son user FTP
-            password: "PASSWORD", // son mot de passe FTP
+            host: "ftp.chronochris.be",   // mettre le FTP de ton frère
+            user: "chron1992585",     // son user FTP
+            password: "Chirs-7107", // son mot de passe FTP
             secure: false
         });
         await client.downloadTo(localFile, "/chemin-sur-lws/r1.json");
